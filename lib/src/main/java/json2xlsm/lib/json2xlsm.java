@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Iterator; 
 import java.util.Map; 
-import java.util.Iterator;
+import java.util.Set;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -109,7 +109,7 @@ public class json2xlsm {
 		int linea = 0;
 		int columna;
 
-		JSONObject records;
+		JSONArray records;
 		records = this.readJSONFile(strFileJSON);
 		
 		String k;
@@ -122,13 +122,34 @@ public class json2xlsm {
 				if (row == null)
 					row = sheet.createRow(linea);
 
-				Map values = (Map) records.get(counter);				
+				Map values = (Map) records.get(counter);
+				
+				if (linea==0) {
+					// Get all keys
+					columna = 0;					
+			        Set<String> keys = values.keySet();
+			        for (String item : keys) {
+			        	cell = row.getCell(columna);
+						if (cell == null)
+							cell = row.createCell(columna);
+			        	cell.setCellValue(item);
+			        	columna++;
+			        }
+			        linea++;
+			        row = sheet.getRow(linea);
+					if (row == null)
+						row = sheet.createRow(linea);
+				}
+				
+				
 				Iterator<Map.Entry> itr1 = values.entrySet().iterator();
 				columna = 0;
 				  while (itr1.hasNext()) {
 					Map.Entry pair = itr1.next();
 					k = pair.getKey().toString();
-	                FieldValue = pair.getValue().toString();
+	                if (pair.getValue()==null)
+	                	FieldValue = "";
+	                else FieldValue = pair.getValue().toString();
 
 	                cell = row.getCell(columna);
 					if (cell == null)
@@ -156,14 +177,14 @@ public class json2xlsm {
 	 *
 	 * @author Pep Marxuach, jmarxuach
 	 */
-	private JSONObject readJSONFile(String jsonFilename) {
+	private JSONArray  readJSONFile(String jsonFilename) {
 		
         try {
         	
         	Object obj = new JSONParser().parse(new FileReader(jsonFilename)); 
             
             // typecasting obj to JSONObject 
-            JSONObject json = (JSONObject) obj; 
+        	JSONArray  json = (JSONArray ) obj; 
             
         	return json;
         } catch (IOException e) {
