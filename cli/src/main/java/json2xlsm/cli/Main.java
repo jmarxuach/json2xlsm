@@ -9,7 +9,7 @@ import java.security.GeneralSecurityException;
 /**
  * Command Line main class to call json2xlsm object.
  * @author Pep Marxuach, jmarxuach
- * @version 1.0.0.0
+ * @version 1.0.0.1
  */
 public class Main {
     
