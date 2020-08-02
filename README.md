@@ -1,2 +1,28 @@
+
 # json2xlsm
-Adds json data file into xlsm first sheet macro excel file
+Adds json data file into xlsm first sheet macro excel file. 
+Usefull from PHP or any language that doesn't have Excel Macro library. 
+
+## Usage
+
+If you want to use a xlsm excel sheet from PHP or any other language, json2xlsm will fill first sheet data with JSON file. Usually you create a xlsm with your macros in Vb and you do not need to edit macros from PHP or any other language, but you need to replace sheet data in XLSM files.
+
+```
+java -jar json2xlsm.jar <strFileJSON> <strMacroExcelFileIn> <strMacroExcelFileOut>
+```
+
+## Creating JSON file from PHP
+
+```php
+
+$array = array(
+    0 => array("field1" => "Value", "field2" => "Value"),
+    1 => array("field1" => "Value", "field2" => "Value"),
+    2 => array("field1" => "Value", "field2" => "Value"),
+);
+
+$jsonString = json_encode($array);
+
+file_put_contents("jsonFilename.json", $jsonString);
+
+```
