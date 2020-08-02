@@ -10,6 +10,24 @@ If you want to use a xlsm excel sheet from PHP or any other language, json2xlsm 
 ```
 java -jar json2xlsm.jar <strFileJSON> <strMacroExcelFileIn> <strMacroExcelFileOut>
 ```
+## Creating JSON file from Python and executing json2xlsm
+
+```python
+import json
+import os
+
+data = [
+{'field1': 'Value', 'field2': 'Value', 'field3': 'Value'},
+{'field1': 'Value', 'field2': 'Value', 'field3': 'Value'},
+{'field1': 'Value', 'field2': 'Value', 'field3': 'Value'},
+]
+
+with open('jsonFilename.json', 'w') as fout:
+    json.dump(data , fout)
+
+os.system('java -jar json2xlsm.jar jsonFilename.json MacroExcelTemplateFile.xlsm MacroExcelFileOut.xlsm')
+
+```
 
 ## Creating JSON file from PHP and executing json2xlsm
 
