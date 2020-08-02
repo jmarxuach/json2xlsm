@@ -5,7 +5,7 @@ Usefull from PHP, python or any language that doesn't have Excel Macro library t
 
 ## Usage
 
-If you want to use a xlsm excel sheet from PHP, python or any other language without xlms library, json2xlsm will fill first sheet data with JSON file. Usually you create a xlsm with your macros in Vb and you do not need to edit macros, but you need to replace sheet data in XLSM files.
+Usually you create a xlsm with your macros in Vb and you do not need to edit macros, but you need to replace sheet data in XLSM files.
 
 ```
 java -jar json2xlsm.jar <strFileJSON> <strMacroExcelFileIn> <strMacroExcelFileOut>
