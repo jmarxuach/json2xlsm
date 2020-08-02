@@ -11,7 +11,9 @@ If you want to use a xlsm excel sheet from PHP or any other language, json2xlsm 
 java -jar json2xlsm.jar <strFileJSON> <strMacroExcelFileIn> <strMacroExcelFileOut>
 ```
 
-## Creating JSON file from PHP
+## Creating JSON file from PHP and executing json2xlsm
+
+All values must be in UTF8.
 
 ```php
 
@@ -24,5 +26,7 @@ $array = array(
 $jsonString = json_encode($array);
 
 file_put_contents("jsonFilename.json", $jsonString);
+
+exec("java -jar json2xlsm.jar jsonFilename.json MacroExcelTemplateFile.xlsm MacroExcelFileOut.xlsm");
 
 ```
