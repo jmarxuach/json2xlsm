@@ -27,6 +27,6 @@ $jsonString = json_encode($array);
 
 file_put_contents("jsonFilename.json", $jsonString);
 
-exec("java -jar json2xlsm.jar jsonFilename.json MacroExcelTemplateFile.xlsm MacroExcelFileOut.xlsm");
+shell_exec("java -jar json2xlsm.jar jsonFilename.json MacroExcelTemplateFile.xlsm MacroExcelFileOut.xlsm");
 
 ```
