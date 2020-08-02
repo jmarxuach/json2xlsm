@@ -1,7 +1,7 @@
 
 # json2xlsm
 Adds json data file into xlsm first sheet macro excel file. 
-Usefull from PHP, python or any language that doesn't have Excel Macro library that keeps after updating xlsm data.
+Usefull from PHP, python or any language that doesn't have Excel Macro library that keeps visual basic and macro code after updating xlsm data.
 
 ## Usage
 
