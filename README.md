@@ -1,6 +1,6 @@
 
 # json2xlsm
-Adds json data file into xlsm first sheet macro excel file. 
+Command line tool for update data into xlsm sheet macro excel file. 
 Usefull from PHP, python or any language that doesn't have Excel Macro library that keeps visual basic and macro code after updating xlsm data.
 
 ## Usage
