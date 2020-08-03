@@ -10,6 +10,13 @@ Usually you create a xlsm with your macros in Vb and you do not need to edit mac
 ```
 java -jar json2xlsm.jar <strFileJSON> <strMacroExcelFileIn> <strMacroExcelFileOut>
 ```
+
+Where : 
+
+- strFileJSON : Is the data to insert into the first excel sheet.
+- strMacroExcelFileIn : Is your report template with macros in and the first sheet empty.
+- strMacroExcelFileOut : Is the resulting excel file with json data in the sheet and your vb code intact. I you have an Workbook_Open report will generate on open excel.
+
 ## Creating JSON file from Python and executing json2xlsm
 
 ```python
