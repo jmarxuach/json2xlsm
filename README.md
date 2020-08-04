@@ -1,14 +1,39 @@
 
 # json2xlsm
-Adds json data file into xlsm first sheet macro excel file. 
-Usefull from PHP or any language that doesn't have Excel Macro library. 
+Command line tool for update data into xlsm first sheet of a macro excel file. 
+Usefull from PHP, python or any language that doesn't have Excel Macro library that keeps visual basic and macro code after updating xlsm data.
 
 ## Usage
 
-If you want to use a xlsm excel sheet from PHP or any other language, json2xlsm will fill first sheet data with JSON file. Usually you create a xlsm with your macros in Vb and you do not need to edit macros from PHP or any other language, but you need to replace sheet data in XLSM files.
+Usually you create a xlsm with your macros in Vb and you do not need to edit macros, but you need to replace sheet data in XLSM files.
 
 ```
 java -jar json2xlsm.jar <strFileJSON> <strMacroExcelFileIn> <strMacroExcelFileOut>
+```
+
+Where : 
+
+- strFileJSON : Is the data to insert into the first excel sheet.
+- strMacroExcelFileIn : Is your report template with macros in and the first sheet empty.
+- strMacroExcelFileOut : Is the resulting excel file with json data in the first sheet and your vb code intact. I you have an Workbook_Open report will generate on open excel.
+
+## Creating JSON file from Python and executing json2xlsm
+
+```python
+import json
+import os
+
+data = [
+{'field1': 'Value', 'field2': 'Value', 'field3': 'Value'},
+{'field1': 'Value', 'field2': 'Value', 'field3': 'Value'},
+{'field1': 'Value', 'field2': 'Value', 'field3': 'Value'},
+]
+
+with open('jsonFilename.json', 'w') as fout:
+    json.dump(data , fout)
+
+os.system('java -jar json2xlsm.jar jsonFilename.json MacroExcelTemplateFile.xlsm MacroExcelFileOut.xlsm')
+
 ```
 
 ## Creating JSON file from PHP and executing json2xlsm
