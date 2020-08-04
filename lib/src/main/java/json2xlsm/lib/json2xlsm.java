@@ -8,16 +8,14 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Iterator; 
-import java.util.Map; 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-import org.json.simple.JSONArray; 
-import org.json.simple.JSONObject; 
-import org.json.simple.parser.*;
-
+import com.google.gson.*;
 
 /**
  * Adds json data into xlsm first sheet macro excel file
@@ -28,14 +26,17 @@ import org.json.simple.parser.*;
 public class json2xlsm {
 
 	/**
-	 * Constructor : Nothing to do. 
+	 * Constructor : Nothing to do.
+	 * 
 	 * @author Pep Marxuach, jmarxuach
 	 */
 	public json2xlsm() throws Exception {
-		
+
 	}
+
 	/**
 	 * Parse JSON and adds json data into xlsm first sheet macro excel file.
+	 * 
 	 * @param strFileJSON
 	 * @param strExcelFileIn
 	 * @param strExcelFileOut
@@ -64,14 +65,15 @@ public class json2xlsm {
 
 			dateEnd = new java.util.Date();
 
-
 		} catch (Exception e) {
 			throw e;
 		}
 
 	}
+
 	/**
 	 * Checks if a string is numeric representation
+	 * 
 	 * @returns True is string is numeric, or False otherwise
 	 */
 	public boolean isNumber(String num) {
@@ -109,49 +111,47 @@ public class json2xlsm {
 		int linea = 0;
 		int columna;
 
-		JSONArray records;
-		records = this.readJSONFile(strFileJSON);
 		
+		Map[] records = this.readGSONFile(strFileJSON);
 		String k;
 		String FieldValue;
-
-
-		if (records != null) {			
-			for (int counter = 0; counter < records.size(); counter++) {
+		
+		if (records != null) {	
+		   	for (int i = 0; i < records.length; i++) {
+		   		
 				row = sheet.getRow(linea);
 				if (row == null)
 					row = sheet.createRow(linea);
-
-				Map values = (Map) records.get(counter);
 				
-				if (linea==0) {
-					// Get all keys
-					columna = 0;					
-			        Set<String> keys = values.keySet();
-			        for (String item : keys) {
-			        	cell = row.getCell(columna);
+		   		Iterator<Map.Entry> itrKeys = records[i].entrySet().iterator();
+		   		if (i==0) {
+		   			columna = 0;
+		   			while (itrKeys.hasNext()) {
+						Map.Entry pair = itrKeys.next();
+						k = pair.getKey().toString();
+						cell = row.getCell(columna);
 						if (cell == null)
 							cell = row.createCell(columna);
-			        	cell.setCellValue(item);
+			        	cell.setCellValue(k);
 			        	columna++;
-			        }
-			        linea++;
-			        row = sheet.getRow(linea);
+						
+			   	 	}
+		   			linea++;
+		   			row = sheet.getRow(linea);
 					if (row == null)
 						row = sheet.createRow(linea);
-				}
-				
-				
-				Iterator<Map.Entry> itr1 = values.entrySet().iterator();
-				columna = 0;
-				  while (itr1.hasNext()) {
+		   			
+		   		} 
+		   		
+		   		Iterator<Map.Entry> itr1 = records[i].entrySet().iterator();
+		   		columna = 0;		
+		   		while (itr1.hasNext()) {
 					Map.Entry pair = itr1.next();
-					k = pair.getKey().toString();
-	                if (pair.getValue()==null)
-	                	FieldValue = "";
-	                else FieldValue = pair.getValue().toString();
-
-	                cell = row.getCell(columna);
+					if (pair.getValue()==null)
+		                	FieldValue = "";
+		                else FieldValue = pair.getValue().toString();
+					 
+					  cell = row.getCell(columna);
 					if (cell == null)
 						cell = row.createCell(columna);
 
@@ -161,10 +161,12 @@ public class json2xlsm {
 					} else
 						cell.setCellValue(FieldValue);
 					columna++;
-				}				
-				
-				linea++;
-			}
+					
+		   	 	}
+		   		
+		   	 	linea++;
+	
+		   	}
 		}
 
 		// Write the output to a file
@@ -173,31 +175,27 @@ public class json2xlsm {
 		fileOut.close();
 
 	}
+
 	/**
 	 *
 	 * @author Pep Marxuach, jmarxuach
 	 */
-	private JSONArray  readJSONFile(String jsonFilename) {
+	private Map[] readGSONFile(String jsonFilename) {
 		
-        try {
-        	
-        	Object obj = new JSONParser().parse(new FileReader(jsonFilename)); 
-            
-            // typecasting obj to JSONObject 
-        	JSONArray  json = (JSONArray ) obj; 
-            
-        	return json;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        
-        return null;
-		
+       try {
+       	
+    	   Gson gson = new Gson();
+    	   Map[] map = gson.fromJson(new FileReader(jsonFilename), Map[].class);
+    	   
+    	   return map;    	   	
+       	   
+       } catch (IOException e) {
+           e.printStackTrace();
+       } 
+       
+       
+       return null;
 		
 	}
-	
-	
 
 }
