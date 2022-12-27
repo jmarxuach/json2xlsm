@@ -1,7 +1,7 @@
 
 # json2xlsm
-Command line tool for update data into xlsm first sheet of a macro excel file. 
-Usefull from PHP, python or any language that doesn't have Excel Macro library that keeps visual basic and macro code after updating xlsm data.
+Command line tool to update data into xlsm first sheet of a macro excel file. 
+Usefull from PHP, or any language that doesn't have Excel Macro library that keeps visual basic and macro code after updating xlsm data.
 
 ## Usage
 
